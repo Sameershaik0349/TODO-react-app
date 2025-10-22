@@ -1,15 +1,18 @@
 // frontend/src/pages/Login.jsx
 
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+// REMOVE useNavigate from react-router-dom import
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login, loading } = useAuth(); // Get login function and loading state from context
-  const navigate = useNavigate();
+  // Get login function and loading state from context
+  const { login, loading } = useAuth();
+  // REMOVE the useNavigate hook call
+  // const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,8 +24,10 @@ function Login() {
     }
 
     try {
+      // Call the login function from context
       await login(email, password);
-      // navigate('/'); // AuthContext now handles navigation on successful login
+      // Navigation is handled inside the login function in AuthContext
+      // No need to call navigate() here
     } catch (err) {
       // Use the error message thrown from AuthContext or a default
       setError(
@@ -47,6 +52,7 @@ function Login() {
         )}
 
         <form onSubmit={handleSubmit}>
+          {/* Email Input */}
           <div className="mb-4">
             <label
               className="block text-gray-400 text-sm font-bold mb-2"
@@ -64,6 +70,7 @@ function Login() {
               required
             />
           </div>
+          {/* Password Input */}
           <div className="mb-6">
             <label
               className="block text-gray-400 text-sm font-bold mb-2"
@@ -81,6 +88,7 @@ function Login() {
               required
             />
           </div>
+          {/* Submit Button */}
           <div className="flex items-center justify-between">
             <button
               type="submit"
@@ -93,6 +101,7 @@ function Login() {
             </button>
           </div>
         </form>
+        {/* Link to Register */}
         <p className="text-center text-gray-400 text-sm mt-6">
           Don't have an account?{" "}
           <Link
@@ -107,5 +116,4 @@ function Login() {
   );
 }
 
-// Ensure this is the very last line, with nothing after it except maybe empty lines.
 export default Login;

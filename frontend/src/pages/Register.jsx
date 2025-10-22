@@ -1,7 +1,8 @@
 // frontend/src/pages/Register.jsx
 
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+// REMOVE useNavigate from react-router-dom import
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Register() {
@@ -9,8 +10,10 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const { register, loading } = useAuth(); // Get register function from context
-  const navigate = useNavigate();
+  // Get register function and loading state, but not navigate
+  const { register, loading } = useAuth();
+  // REMOVE the useNavigate hook call
+  // const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,15 +29,16 @@ function Register() {
       return;
     }
 
-    // Basic password validation (example: minimum length)
     if (password.length < 6) {
       setError("Password must be at least 6 characters long.");
       return;
     }
 
     try {
+      // Call the register function from context
       await register(email, password);
-      // navigate('/'); // AuthContext handles navigation on success
+      // Navigation is now handled inside the register function in AuthContext
+      // No need to call navigate() here
     } catch (err) {
       setError(
         typeof err === "string" ? err : "Registration failed. Please try again."
@@ -56,6 +60,7 @@ function Register() {
         )}
 
         <form onSubmit={handleSubmit}>
+          {/* Email Input */}
           <div className="mb-4">
             <label
               className="block text-gray-400 text-sm font-bold mb-2"
@@ -73,6 +78,7 @@ function Register() {
               required
             />
           </div>
+          {/* Password Input */}
           <div className="mb-4">
             <label
               className="block text-gray-400 text-sm font-bold mb-2"
@@ -90,6 +96,7 @@ function Register() {
               required
             />
           </div>
+          {/* Confirm Password Input */}
           <div className="mb-6">
             <label
               className="block text-gray-400 text-sm font-bold mb-2"
@@ -107,6 +114,7 @@ function Register() {
               required
             />
           </div>
+          {/* Submit Button */}
           <div className="flex items-center justify-between">
             <button
               type="submit"
@@ -119,6 +127,7 @@ function Register() {
             </button>
           </div>
         </form>
+        {/* Link to Login */}
         <p className="text-center text-gray-400 text-sm mt-6">
           Already have an account?{" "}
           <Link to="/login" className="text-accent hover:underline font-medium">
@@ -130,5 +139,4 @@ function Register() {
   );
 }
 
-// 💡 ENSURE THIS LINE IS AT THE VERY END 💡
 export default Register;
