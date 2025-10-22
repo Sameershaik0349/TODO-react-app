@@ -5,7 +5,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
-// Import the User Model (Ensure this path is correct based on your previous step)
+// Correct path from backend/routes/ to backend/models/
 const User = require("../models/User");
 
 // --- Helper Function: Generate JWT ---
