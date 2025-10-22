@@ -1,0 +1,104 @@
+/* frontend/src/App.css - Custom Styles for the To-Do App */
+
+/* Ensures the App is centered on the screen */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* The main container for the To-Do list */
+.App {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+/* Input Form Styles */
+form {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  font-size: 1rem;
+}
+
+form button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+/* List Styles */
+.todo-list {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 8px;
+  background-color: #f9f9f9;
+  border-left: 5px solid #007bff; /* Default active color */
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.todo-list li.completed {
+  background-color: #e9ecef;
+  border-left-color: #28a745; /* Completed color */
+}
+
+.todo-list li span {
+  cursor: pointer;
+  flex-grow: 1;
+  font-size: 1rem;
+}
+
+.todo-list li.completed span {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.delete-btn:hover {
+  color: #a71d2a;
+}

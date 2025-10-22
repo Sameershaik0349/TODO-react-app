@@ -1,0 +1,19 @@
+/* frontend/src/index.css */
+
+/* * Tailwind CSS Directives
+ * These commands replace the default boilerplate CSS and import 
+ * all Tailwind utility classes.
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* * Optional: This custom layer ensures smooth color transitions 
+ * when using Tailwind classes for things like background color or text color.
+ * It is applied to the base layer.
+ */
+@layer base {
+  body {
+    @apply transition-colors duration-500;
+  }
+}
