@@ -2,6 +2,7 @@
 
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
+// REMOVE useNavigate from the main import here
 import { useNavigate } from "react-router-dom";
 
 // Create the context
@@ -18,23 +19,20 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(!!token);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  // REMOVE useNavigate call from here
+  // const navigate = useNavigate();
 
   useEffect(() => {
-    // Check local storage for token on mount
     if (token) {
       setIsAuthenticated(true);
-      // Optional: Decode token to get user info, but for now, rely on its presence
     } else {
       setIsAuthenticated(false);
       setUser(null);
     }
   }, [token]);
 
-  // Set the default authorization header for all subsequent requests
   const setAuthHeader = (authToken) => {
     if (authToken) {
-      // Sends the JWT token with every request in the Authorization header
       axios.defaults.headers.common["Authorization"] = `Bearer ${authToken}`;
     } else {
       delete axios.defaults.headers.common["Authorization"];
@@ -47,6 +45,8 @@ export const AuthProvider = ({ children }) => {
 
   // Login Function
   const login = async (email, password) => {
+    // GET useNavigate hook INSIDE the function
+    const navigate = useNavigate();
     setLoading(true);
     try {
       const response = await axios.post(`${API_URL}/login`, {
@@ -60,13 +60,12 @@ export const AuthProvider = ({ children }) => {
       setToken(authToken);
       setUser(userData);
       setIsAuthenticated(true);
-      navigate("/"); // Navigate to the dashboard
+      navigate("/"); // Navigate after successful login
     } catch (error) {
       console.error(
         "Login failed:",
         error.response?.data?.message || error.message
       );
-      // Throw simplified error message for the component to display
       throw error.response?.data?.message || "Login failed";
     } finally {
       setLoading(false);
@@ -75,6 +74,8 @@ export const AuthProvider = ({ children }) => {
 
   // Register Function
   const register = async (email, password) => {
+    // GET useNavigate hook INSIDE the function
+    const navigate = useNavigate();
     setLoading(true);
     try {
       const response = await axios.post(`${API_URL}/register`, {
@@ -88,7 +89,7 @@ export const AuthProvider = ({ children }) => {
       setToken(authToken);
       setUser(userData);
       setIsAuthenticated(true);
-      navigate("/"); // Navigate to the dashboard
+      navigate("/"); // Navigate after successful registration
     } catch (error) {
       console.error(
         "Registration failed:",
@@ -102,11 +103,14 @@ export const AuthProvider = ({ children }) => {
 
   // Logout Function
   const logout = () => {
+    // GET useNavigate hook INSIDE the function
+    const navigate = useNavigate();
     localStorage.removeItem("token");
     setToken(null);
     setUser(null);
     setIsAuthenticated(false);
-    navigate("/login");
+    setAuthHeader(null); // Clear auth header on logout
+    navigate("/login"); // Navigate after logout
   };
 
   return (
